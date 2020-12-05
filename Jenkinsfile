@@ -5,6 +5,7 @@ node{
     }
     
     stage('Build Docker Image'){
+       cd 'home/BuildMachine/git_workspace/eShopOnWeb'
        sh 'docker-compose build '
        sh 'docker-compose up -d'
     }

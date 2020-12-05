@@ -20,24 +20,17 @@ pipeline {
     stage('Docker Push') {
       steps {
         echo "docker push"
-       # withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-       #   sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-       #  sh "docker push kmlaydin/podinfo:${env.BUILD_NUMBER}"
         }
       }
     }
     stage('Docker Remove Image') {
       steps {
         echo "docker remove"
-       # sh "docker rmi kmlaydin/podinfo:${env.BUILD_NUMBER}"
       }
     }
     stage('Apply Kubernetes Files') {
       steps {
           echo "kubernetes"
-        #  withKubeConfig([credentialsId: 'kubeconfig']) {
-         # sh 'cat deployment.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
-         # sh 'kubectl apply -f service.yaml'
         }
       }
   }

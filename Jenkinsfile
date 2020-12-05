@@ -4,9 +4,5 @@ node{
 
     }
     
-    stage('Build Docker Image'){
-       
-       sh 'docker-compose build '
-       sh 'docker-compose up -d'
-    }
+    
 }

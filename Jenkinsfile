@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('SCM Checkout') {
       steps {
-        sh "git credentialsId: '02577ad1-6206-4d6f-8284-db061b89cac7', url: 'https://github.com/uday-nitjsr/eShopOnWeb.git'"
+        sh "git clone https://github.com/uday-nitjsr/eShopOnWeb.git"
       }
     }
   }

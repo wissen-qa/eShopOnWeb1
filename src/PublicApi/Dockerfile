@@ -22,4 +22,5 @@ RUN dotnet publish "./PublicApi.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+LABEL name="Demo_App"
 ENTRYPOINT ["dotnet", "PublicApi.dll"]

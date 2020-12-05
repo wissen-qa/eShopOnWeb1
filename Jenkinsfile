@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Docker Build') {
       steps {
-        sh "sudo docker stop '${docker ps --filter "label-name=Demo_App" -q}"'
+        sh "sudo docker stop '${docker ps --filter "label_name=Demo_App" -q}"'
         sh "sudo docker-compose build"
         sh "sudo docker-compose up -d"
         

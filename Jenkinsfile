@@ -3,24 +3,27 @@ pipeline {
   stages {
     stage('Docker Build') {
       steps {
-        sh "sudo docker-compose build"
+        sh "docker build -t kmlaydin/podinfo:${env.BUILD_NUMBER} ."
       }
     }
-    stage('Docker Delete Old Containers') {
+    stage('Docker Push') {
       steps {
-        sh "sudo docker ps --filter 'label=name=Demo_App' -q | xargs --no-run-if-empty sudo docker container stop"
-        sh "sudo docker ps --filter 'label=name=Demo_App' -q | xargs -r sudo docker container rm"
+        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+          sh "docker push kmlaydin/podinfo:${env.BUILD_NUMBER}"
         }
       }
     }
-    stage('Docker Compose Up') {
+    stage('Docker Remove Image') {
       steps {
-        sh "sudo docker-compose up -d"
+        sh "docker rmi kmlaydin/podinfo:${env.BUILD_NUMBER}"
       }
     }
     stage('Apply Kubernetes Files') {
       steps {
-          sh 'echo Kubernetes'
+          withKubeConfig([credentialsId: 'kubeconfig']) {
+          sh 'cat deployment.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
+          sh 'kubectl apply -f service.yaml'
         }
       }
   }

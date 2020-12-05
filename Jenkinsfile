@@ -3,8 +3,11 @@ pipeline {
   stages {
     stage('Docker Build') {
       steps {
+        echo whoami
+        sudo su
         sh "docker-compose build"
         sh "docker-compose up -d"
+        
       }
     }
     stage('Docker Push') {

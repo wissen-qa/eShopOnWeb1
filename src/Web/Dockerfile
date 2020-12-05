@@ -23,5 +23,5 @@ COPY --from=build /app/src/Web/out ./
 
 # Optional: Set this here if not setting it from docker-compose.yml
 # ENV ASPNETCORE_ENVIRONMENT Development
-
+LABEL name="Demo_App"
 ENTRYPOINT ["dotnet", "Web.dll"]

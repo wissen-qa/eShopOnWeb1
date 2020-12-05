@@ -3,6 +3,8 @@ version: '3.4'
 services:
   eshopwebmvc:
     image: ${DOCKER_REGISTRY-}eshopwebmvc
+    labels:
+      eShopOnWeb: "This label for the eShopOnWeb"
     build:
       context: .
       dockerfile: src/Web/Dockerfile

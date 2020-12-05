@@ -3,9 +3,9 @@ pipeline {
   stages {
     stage('Docker Build') {
       steps {
-        sh 'sudo docker stop ${docker ps -a -f label_name=Demo_App  -q}'
-        sh 'sudo docker-compose build'
-        sh 'sudo docker-compose up -d'
+        sh "sudo docker ps --filter "label=name=Demo_App" -q | xargs --no-run-if-empty docker container stop"
+        sh "sudo docker ps --filter "label=name=Demo_App" -q | xargs -r docker container rm"
+        sh "sudo docker-compose up -d"
         
       }
     }
